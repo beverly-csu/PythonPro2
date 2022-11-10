@@ -9,6 +9,8 @@ print(len(temp))
 df['Rating'].fillna(-1, inplace=True)
 # Определи, какое ещё значение размера ('Size') хранится в датасете помимо Килобайтов и Мегабайтов, замени его на -1.
 # Преобразуй размеры приложений ('Size') в числовой формат (float). Размер всех приложений должен измеряться в Мегабайтах.
+print(df['Size'].value_counts())
+
 def make_size(size):
     if size[-1] == 'M':
         return float(size[:-1])
