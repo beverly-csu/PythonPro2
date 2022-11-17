@@ -29,3 +29,16 @@ def make_price(price):
 
 df['Price'] = df['Price'].apply(make_price)
 
+df['Profit'] = df['Price'] * df['Installs']
+
+temp = df[df['Type'] == 'Paid']['Profit'].max()
+print('Максимальный заработок на приложении:', temp)
+
+def count_genres(genres):
+    genres = genres.split(';') # 'Art & Design;Pretend Play' -> ['Art & Design', 'Pretend Play']
+    return len(genres)
+
+df['Number of genres'] = df['Genres'].apply(count_genres)
+
+temp = df['Number of genres'].max()
+print('Максимальное количество жанров:', temp)
