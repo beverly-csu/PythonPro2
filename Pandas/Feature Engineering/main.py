@@ -14,3 +14,18 @@ def make_size(size):
 
 df['Size'] = df['Size'].apply(make_size)
 
+def make_installs(installs):
+    if installs[-1] == '+':
+        installs = installs[:-1]
+    installs = installs.replace(',', '') # 10,000,000+ -> 10000000
+    return int(installs)
+
+df['Installs'] = df['Installs'].apply(make_installs)
+
+def make_price(price):
+    if price[0] == '$':
+        price = price[1:]
+    return float(price)
+
+df['Price'] = df['Price'].apply(make_price)
+
