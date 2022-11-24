@@ -46,3 +46,12 @@ def is_morning(datum):
 df['Morning Start'] = df['Datum'].apply(is_morning)
 
 print(len(df['Company Name'].value_counts()))
+
+# def fix_failure(mission_status):
+#     if 'Failure' in mission_status:
+#         return 0
+#     else:
+#         return 1
+
+# df['Status Mission'] = df['Status Mission'].apply(fix_failure)
+# plt.show()
