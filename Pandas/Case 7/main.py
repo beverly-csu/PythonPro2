@@ -42,5 +42,12 @@ data = '''0   permalink             39999 non-null  object
  37  round_G               39999 non-null  int64
  38  round_H               39999 non-null  int64'''
 
-for line in data.split('\n'):
-    print(df[line.split()[1]].head(1))
+# for line in data.split('\n'):
+#     print(df[line.split()[1]].head(1))
+
+temp = df[
+    (df['round_A'] > 0) &
+    (df['round_B'] > 0) &
+    (df['round_C'] > 0)
+]
+print(len(temp))
