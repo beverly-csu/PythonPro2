@@ -20,10 +20,18 @@ def make_stonks(salary):
 df['Mid salary'] = df['Salary Estimate'].apply(make_stonks)
 
 result = {}
+means = []
 for city in df['Location'].value_counts().keys():
     mean = df[df['Location'] == city]['Mid salary'].mean()
     median = df[df['Location'] == city]['Mid salary'].median()
     mean = round(mean, 2)
     median = round(median, 2)
+    means.append(mean)
     result[city] = {'mean': mean, 'median': median}
-    print(city, '- Средняя зарплата:', mean, '- Медианная зарплата:', median)
+
+cities = list(result.keys())
+print(cities)
+print(means)
+plt.bar(cities[:5], means[:5])
+plt.xticks(rotation=90)
+plt.show()

@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 df = pd.read_csv('investments_VC.csv')
 
@@ -42,12 +43,27 @@ data = '''0   permalink             39999 non-null  object
  37  round_G               39999 non-null  int64
  38  round_H               39999 non-null  int64'''
 
-# for line in data.split('\n'):
-#     print(df[line.split()[1]].head(1))
+#Гипотеза: если в стартап инвестировали больше 1М $ вероятность успешности стартапа выше.
+def fix_funding_total_usd(funding_total_usd):
+    funding_total_usd = funding_total_usd.replace(',','')
+    funding_total_usd = funding_total_usd.replace('-','0')
+    return int(funding_total_usd)
 
-temp = df[
-    (df['round_A'] > 0) &
-    (df['round_B'] > 0) &
-    (df['round_C'] > 0)
-]
-print(len(temp))
+df['funding_total_usd'] = df['funding_total_usd'].apply(fix_funding_total_usd)
+
+over_millon = df[df['funding_total_usd'] > 1000000]
+success_over_million = over_millon[over_millon['status'] != 'closed']
+procent_over_million = len(success_over_million) / len(over_millon) * 100
+print(round(procent_over_million, 2))
+
+less_millon = df[df['funding_total_usd'] < 1000000]
+success_less_million = less_millon[less_millon['status'] != 'closed']
+procent_less_million = len(success_less_million) / len(less_millon) * 100
+print(round(procent_less_million, 2))
+
+result = [round(procent_less_million, 2), round(procent_over_million, 2)]
+titles = ['< 1М $', '> 1М $']
+result_for_legend = [str(result[0]) + '%', str(result[1]) + '%']
+
+plt.pie(result, labels=result_for_legend)
+plt.show()
