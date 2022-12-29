@@ -60,6 +60,7 @@ df['occupation_type'] = df['occupation_type'].apply(check_occ_type)
 df = df.drop(['id', 'city', 'people_main', 'bdate', 'graduation', 'life_main',
              'langs', 'last_seen', 'occupation_name', 'career_start', 'career_end'], axis=1)
 
+# df.to_csv('test_clear.csv')
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
