@@ -33,7 +33,6 @@ def fix_education_status(education_status):
 
 df['education_status'] = df['education_status'].apply(fix_education_status)
 
-
 def fix_occupation_type(occupation_type):
     if occupation_type == 'work':
         return occupation_type
