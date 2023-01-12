@@ -5,7 +5,7 @@ from mapmanager import MapManager
 class Game(ShowBase):
     def __init__(self):
         super().__init__()
-        mapmanager = MapManager()
+        mapmanager = MapManager()       ## NEED
         base.camLens.setFov(90)
 
 

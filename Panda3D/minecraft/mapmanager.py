@@ -5,7 +5,7 @@ class MapManager:
         self.texture = 'block.png'
         self.color = (0.57, 1, 0.55, 1)
         self.startNew()
-        self.addBlock((0, 0, 0))
+        self.addBlock((0, 10, 0))
 
     def startNew(self):
         self.land = render.attachNewNode('land')
