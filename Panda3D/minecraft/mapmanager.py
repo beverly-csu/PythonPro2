@@ -45,6 +45,3 @@ class MapManager:
         color = self.getColor(int(position[2]))
         self.block.setColor(color)
         self.block.reparentTo(self.land)
-
-    def randomGenerate(self, filename):
-        ...
