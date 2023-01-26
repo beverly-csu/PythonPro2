@@ -6,7 +6,8 @@ class Game(ShowBase):
     def __init__(self):
         super().__init__()
         mapmanager = MapManager()       ## NEED
-        mapmanager.loadLand('map.txt')
+        # mapmanager.randomGenerate('new_map.txt')
+        mapmanager.loadLand('new_map.txt')
         base.camLens.setFov(90)
 
 
