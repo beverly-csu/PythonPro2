@@ -1,4 +1,5 @@
 KEY_SWITCH_CAMERA = 'c'
+KEY_SWITCH_MODE = 'z'
 
 KEY_FORWARD = 'w'
 KEY_BACK = 's'
@@ -8,6 +9,8 @@ KEY_RIGHT = 'd'
 KEY_TURN_LEFT = 'arrow_left'
 KEY_TURN_RIGHT = 'arrow_right'
 
+KEY_UP = 'e'
+KEY_DOWN = 'q'
 
 class Hero:
     def __init__(self, pos, land):
@@ -88,6 +91,8 @@ class Hero:
     def moveTo(self, angle):
         if self.mode:
             self.justMove(angle)
+        else:
+            self.tryMove(angle)
 
     def forward(self):
         angle = (self.hero.getH()) % 360
@@ -113,6 +118,27 @@ class Hero:
         angle = self.hero.getH()
         self.hero.setH((angle - 5) % 360)
 
+    def up(self):
+        if self.mode:
+            self.hero.setZ(self.hero.getZ() + 1)
+ 
+    def down(self):
+        if self.mode and self.hero.getZ() > 1:
+            self.hero.setZ(self.hero.getZ() - 1)
+
+    def changeMode(self):
+        self.mode = not self.mode
+
+    def tryMove(self, angle):
+        pos = self.lookAt(angle)
+        if self.land.isEmpty(pos):
+            pos = self.land.findHighestBlock(pos)
+            self.hero.setPos(pos)
+        else:
+            pos = (pos[0], pos[1], pos[2] + 1)
+            if self.land.isEmpty(pos):
+                self.hero.setPos(pos)
+
     def acceptEvents(self):
         base.accept(KEY_FORWARD, self.forward)
         base.accept(KEY_FORWARD + '-repeat', self.forward)
@@ -128,4 +154,10 @@ class Hero:
         base.accept(KEY_TURN_RIGHT, self.turnRight)
         base.accept(KEY_TURN_RIGHT + '-repeat', self.turnRight)
 
+        base.accept(KEY_UP, self.up)
+        base.accept(KEY_UP + '-repeat', self.up)
+        base.accept(KEY_DOWN, self.down)
+        base.accept(KEY_DOWN + '-repeat', self.down)
+        
+        base.accept(KEY_SWITCH_MODE, self.changeMode)
         base.accept(KEY_SWITCH_CAMERA, self.changeView)

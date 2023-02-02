@@ -45,3 +45,21 @@ class MapManager:
         color = self.getColor(int(position[2]))
         self.block.setColor(color)
         self.block.reparentTo(self.land)
+        self.block.setTag('at', str(position))
+
+    def findBlocks(self, pos):
+        return self.land.findAllMatches('=at=' + str(pos))
+
+    def isEmpty(self, pos):
+        blocks = self.findBlocks(pos)
+        if blocks:
+            return False
+        else:
+            return True
+
+    def findHighestBlock(self, pos):
+        x, y, _ = pos
+        z = 1
+        while not self.isEmpty((x, y, z)):
+            z += 1
+        return (x, y, z)
