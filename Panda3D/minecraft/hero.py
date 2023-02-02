@@ -5,6 +5,9 @@ KEY_BACK = 's'
 KEY_LEFT = 'a'
 KEY_RIGHT = 'd'
 
+KEY_TURN_LEFT = 'arrow_left'
+KEY_TURN_RIGHT = 'arrow_right'
+
 
 class Hero:
     def __init__(self, pos, land):
@@ -16,6 +19,7 @@ class Hero:
         self.hero.reparentTo(render)
         self.cameraBind()
         self.acceptEvents()
+        self.mode = True
     
     def cameraBind(self):
         base.disableMouse()
@@ -77,5 +81,51 @@ class Hero:
         y_to = y_from + dy
         return (x_to, y_to, z_from)
 
+    def justMove(self, angle):
+        pos = self.lookAt(angle)
+        self.hero.setPos(pos)
+
+    def moveTo(self, angle):
+        if self.mode:
+            self.justMove(angle)
+
+    def forward(self):
+        angle = (self.hero.getH()) % 360
+        self.moveTo(angle)
+
+    def back(self):
+        angle = (self.hero.getH() + 180) % 360
+        self.moveTo(angle)
+    
+    def left(self):
+        angle = (self.hero.getH() + 90) % 360
+        self.moveTo(angle)
+    
+    def right(self):
+        angle = (self.hero.getH() + 270) % 360
+        self.moveTo(angle)
+
+    def turnLeft(self):
+        angle = self.hero.getH()
+        self.hero.setH((angle + 5) % 360)
+
+    def turnRight(self):
+        angle = self.hero.getH()
+        self.hero.setH((angle - 5) % 360)
+
     def acceptEvents(self):
+        base.accept(KEY_FORWARD, self.forward)
+        base.accept(KEY_FORWARD + '-repeat', self.forward)
+        base.accept(KEY_BACK, self.back)
+        base.accept(KEY_BACK + '-repeat', self.back)
+        base.accept(KEY_LEFT, self.left)
+        base.accept(KEY_LEFT + '-repeat', self.left)
+        base.accept(KEY_RIGHT, self.right)
+        base.accept(KEY_RIGHT + '-repeat', self.right)
+
+        base.accept(KEY_TURN_LEFT, self.turnLeft)
+        base.accept(KEY_TURN_LEFT + '-repeat', self.turnLeft)
+        base.accept(KEY_TURN_RIGHT, self.turnRight)
+        base.accept(KEY_TURN_RIGHT + '-repeat', self.turnRight)
+
         base.accept(KEY_SWITCH_CAMERA, self.changeView)
