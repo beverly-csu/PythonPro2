@@ -37,5 +37,45 @@ class Hero:
         else:
             self.cameraBind()
 
+    def checkDir(self, angle):
+        '''угол 0 (от 0 до 20)      ->        Y - 1
+           угол 45 (от 25 до 65)    -> X + 1, Y - 1
+           угол 90 (от 70 до 110)   -> X + 1
+           от 115 до 155            -> X + 1, Y + 1
+           от 160 до 200            ->        Y + 1
+           от 205 до 245            -> X - 1, Y + 1
+           от 250 до 290            -> X - 1
+           от 290 до 335            -> X - 1, Y - 1
+           от 340                   ->        Y - 1'''
+        if angle >= 0 and angle <= 20:
+            return (0, -1)
+        elif angle <= 65:
+            return (+1, -1)
+        elif angle <= 110:
+            return (+1, 0)
+        elif angle <= 155:
+            return (+1, +1)
+        elif angle <= 200:
+            return (0, +1)
+        elif angle <= 245:
+            return (-1, +1)
+        elif angle <= 290:
+            return (-1, 0)
+        elif angle <= 335:
+            return (-1, -1)
+        else:
+            return (0, -1)
+
+    def lookAt(self, angle):
+        x_from = int(self.hero.getX())
+        y_from = int(self.hero.getY())
+        z_from = int(self.hero.getZ())
+
+        dx, dy = self.checkDir(angle)
+        
+        x_to = x_from + dx
+        y_to = y_from + dy
+        return (x_to, y_to, z_from)
+
     def acceptEvents(self):
         base.accept(KEY_SWITCH_CAMERA, self.changeView)
