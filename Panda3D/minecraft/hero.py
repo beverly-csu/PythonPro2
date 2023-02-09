@@ -12,6 +12,9 @@ KEY_TURN_RIGHT = 'arrow_right'
 KEY_UP = 'e'
 KEY_DOWN = 'q'
 
+KEY_BUILD = 'b'
+KEY_DESTROY = 'v'
+
 class Hero:
     def __init__(self, pos, land):
         self.land = land
@@ -139,6 +142,22 @@ class Hero:
             if self.land.isEmpty(pos):
                 self.hero.setPos(pos)
 
+    def build(self):
+        angle = self.hero.getH() % 360
+        pos = self.lookAt(angle)
+        if self.mode:
+            self.land.addBlock(pos)
+        else:
+            self.land.buildBlock(pos)
+
+    def destroy(self):
+        angle = self.hero.getH() % 360
+        pos = self.lookAt(angle)
+        if self.mode:
+            self.land.delBlock(pos)
+        else:
+            self.land.delBlockFrom(pos)
+
     def acceptEvents(self):
         base.accept(KEY_FORWARD, self.forward)
         base.accept(KEY_FORWARD + '-repeat', self.forward)
@@ -161,3 +180,6 @@ class Hero:
         
         base.accept(KEY_SWITCH_MODE, self.changeMode)
         base.accept(KEY_SWITCH_CAMERA, self.changeView)
+
+        base.accept(KEY_BUILD, self.build)
+        base.accept(KEY_DESTROY, self.destroy)
