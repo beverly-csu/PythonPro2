@@ -1,4 +1,6 @@
 # напиши здесь код создания и управления картой
+import pickle
+
 class MapManager:
     def __init__(self):
         self.model = 'block.egg'
@@ -79,3 +81,22 @@ class MapManager:
         x, y, z = self.findHighestBlock(pos)
         pos = x, y, z - 1
         self.delBlock(pos)
+
+    def saveMap(self):
+        blocks = self.land.getChildren()
+        with open('my_map.dat', 'wb') as file:
+            pickle.dump(len(blocks), file)
+            for block in blocks:
+                x, y, z = block.getPos()
+                pos = (int(x), int(y), int(z))
+                pickle.dump(pos, file)
+
+    def loadMap(self):
+        self.clear()
+        with open('my_map.dat', 'rb') as file:
+            count = pickle.load(file)
+            for i in range(count):
+                pos = pickle.load(file)
+                self.addBlock(pos)
+
+

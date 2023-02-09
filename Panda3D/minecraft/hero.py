@@ -183,3 +183,6 @@ class Hero:
 
         base.accept(KEY_BUILD, self.build)
         base.accept(KEY_DESTROY, self.destroy)
+
+        base.accept('l', self.land.loadMap)
+        base.accept('k', self.land.saveMap)
