@@ -47,10 +47,10 @@ class MapManager:
         color = self.getColor(int(position[2]))
         self.block.setColor(color)
         self.block.reparentTo(self.land)
-        self.block.setTag('at', str(position))
+        self.block.setTag('at', str(position))                          # Block (1, 1, 1) tag: at=(1, 1, 1)
 
     def findBlocks(self, pos):
-        return self.land.findAllMatches('=at=' + str(pos))
+        return self.land.findAllMatches('=at=' + str(pos))              # Block at=(1, 1, 1)
 
     def isEmpty(self, pos):
         blocks = self.findBlocks(pos)
@@ -64,7 +64,7 @@ class MapManager:
         z = 1
         while not self.isEmpty((x, y, z)):
             z += 1
-        return (x, y, z)
+        return (x, y, z)     
 
     def buildBlock(self, pos):
         x, y, z = pos
@@ -98,6 +98,3 @@ class MapManager:
             for i in range(count):
                 pos = pickle.load(file)
                 self.addBlock(pos)
-
-
-
